@@ -24,6 +24,15 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
   font-size: ${RFValue(24)}px;
   color: ${({ theme }) => theme.colors.title_light};
+  margin-bottom: ${RFValue(12)}px;
+`;
+
+export const SubTitle = styled.Text`
+  width: 100%;
+  text-align: center;
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(16)}px;
+  color: ${({ theme }) => theme.colors.title_light};
 `;
 
 export const Footer = styled.View`

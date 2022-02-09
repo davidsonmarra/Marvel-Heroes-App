@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   interpolate,
   Extrapolate,
-  withTiming
+  withTiming,
+  runOnJS
 } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
@@ -16,15 +17,21 @@ import {
   Container,
   Header,
   Title,
+  SubTitle,
   Footer
 } from './styles';
 
 const { width } = Dimensions.get('window');
 
 export function Home() {
+  const [buttonTitle, setButtonTitle] = useState('');
+
   const background = '../../assets/home-background2.jpg';
+
   const theme = useTheme();
+
   const animation = useSharedValue(0);
+  const buttonAnimation = useSharedValue('0%');
 
   const animatedStyleMarvel = useAnimatedStyle(() => {
     return {
@@ -54,11 +61,34 @@ export function Home() {
     }
   });
 
+  const animatedStyleText = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(animation.value,
+        [25, 100],
+        [0, 1]
+      )
+    }
+  });
+
+  const animatedStyleButton = useAnimatedStyle(() => {
+    return {
+      width: withTiming(
+        buttonAnimation.value, 
+        { duration: 2500, },
+        () => {
+          'worklet'
+          runOnJS(setButtonTitle)(("Let's Go"));
+        }
+      )
+    }
+  });
+
   useEffect(() => {
     animation.value = withTiming(
       100, 
       { duration: 2500 }
     );
+    buttonAnimation.value = '100%'
   }, []);
 
   return (
@@ -72,12 +102,17 @@ export function Home() {
         </Animated.View>
       </Header>
       <Footer>
-        <Animated.View style={[styles.title]}>
+        <Animated.View style={[animatedStyleText, styles.title]}>
           <Title>
-            No man can win every battle, but no man should fall without a struggle
+            With great power comes great responsibility
           </Title>
+          <SubTitle>
+            Learn more about our heroes
+          </SubTitle>
         </Animated.View>
-        <Button title="Let's Go"/>
+        <Animated.View style={[animatedStyleButton, styles.button]}>
+          <Button title={buttonTitle}/>
+        </Animated.View>
       </Footer>
     </Container>
   );
@@ -93,5 +128,8 @@ const styles = StyleSheet.create({
     width: RFValue(width / 2.5),
     height: RFValue(width / 2.5),
     position: 'absolute'
+  },
+  button: {
+    alignSelf: 'center'
   }
 })
