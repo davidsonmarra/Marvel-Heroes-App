@@ -6,7 +6,8 @@ import Animated, {
   interpolate,
   Extrapolate,
   withTiming,
-  runOnJS
+  runOnJS,
+  Easing
 } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
@@ -24,8 +25,6 @@ import {
 const { width } = Dimensions.get('window');
 
 export function Home() {
-  const [buttonTitle, setButtonTitle] = useState('');
-
   const background = '../../assets/home-background2.jpg';
 
   const theme = useTheme();
@@ -64,7 +63,7 @@ export function Home() {
   const animatedStyleText = useAnimatedStyle(() => {
     return {
       opacity: interpolate(animation.value,
-        [25, 100],
+        [0, 100],
         [0, 1]
       )
     }
@@ -74,10 +73,9 @@ export function Home() {
     return {
       width: withTiming(
         buttonAnimation.value, 
-        { duration: 2500, },
-        () => {
-          'worklet'
-          runOnJS(setButtonTitle)(("Let's Go"));
+        { 
+          duration: 2500,
+          easing: Easing.bezier(.42,0,.58,1)
         }
       )
     }
@@ -86,7 +84,10 @@ export function Home() {
   useEffect(() => {
     animation.value = withTiming(
       100, 
-      { duration: 2500 }
+      { 
+        duration: 2500,
+        easing: Easing.bezier(.42,0,.58,1)
+      }
     );
     buttonAnimation.value = '100%'
   }, []);
@@ -111,7 +112,7 @@ export function Home() {
           </SubTitle>
         </Animated.View>
         <Animated.View style={[animatedStyleButton, styles.button]}>
-          <Button title={buttonTitle}/>
+          <Button title={"Let's Go"}/>
         </Animated.View>
       </Footer>
     </Container>
