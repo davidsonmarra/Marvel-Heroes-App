@@ -1,8 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
+import { NavigationContainer } from '@react-navigation/native';
 import theme from './src/global/styles/theme';
-import { Home } from './src/pages/Home';
 import {
   useFonts,
   Poppins_400Regular,
@@ -11,6 +11,7 @@ import {
 } from '@expo-google-fonts/poppins';
 import AppLoading from 'expo-app-loading';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Routes } from './src/routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,14 +24,16 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider theme={theme}>
-        <StatusBar 
-          barStyle='light-content'
-          backgroundColor='transparent'
-          translucent
-        />
-        <Home />
-      </ThemeProvider>
+      <NavigationContainer>
+        <ThemeProvider theme={theme}>
+          <StatusBar 
+            barStyle='light-content'
+            backgroundColor='transparent'
+            translucent
+          />
+          <Routes />
+        </ThemeProvider>
+      </NavigationContainer>
     </GestureHandlerRootView>
   );
 }

@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import Animated, {
@@ -6,7 +7,6 @@ import Animated, {
   interpolate,
   Extrapolate,
   withTiming,
-  runOnJS,
   Easing
 } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -14,6 +14,7 @@ import { useTheme } from 'styled-components/native';
 import Logo from '../../assets/logo-marvel.svg';
 import LogoStudios from '../../assets/logo-studios.svg';
 import { Button } from '../../components/Button';
+import { RootStackParamList } from '../../routes';
 import {
   Container,
   Header,
@@ -24,7 +25,9 @@ import {
 
 const { width } = Dimensions.get('window');
 
-export function Home() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+export function Home({ navigation }: Props) {
   const background = '../../assets/home-background2.jpg';
 
   const theme = useTheme();
