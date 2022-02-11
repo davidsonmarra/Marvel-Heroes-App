@@ -15,6 +15,7 @@ import Logo from '../../assets/logo-marvel.svg';
 import LogoStudios from '../../assets/logo-studios.svg';
 import { Button } from '../../components/Button';
 import { RootStackParamList } from '../../routes';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   Header,
@@ -22,12 +23,18 @@ import {
   SubTitle,
   Footer
 } from './styles';
+import { IRootState } from '../../store';
+import { fetchHeroes } from '../../store/actions/heroesActions';
 
 const { width } = Dimensions.get('window');
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export function Home({ navigation }: Props) {
+  const dispatch = useDispatch();
+  const {
+    loading_fetch_heroes
+  } = useSelector(({ heroesReducer }: IRootState) => heroesReducer);
   const background = '../../assets/home-background2.jpg';
 
   const theme = useTheme();
@@ -95,6 +102,11 @@ export function Home({ navigation }: Props) {
     buttonAnimation.value = '100%'
   }, []);
 
+  const fetchFirstListOfHeroes = () => {
+    dispatch(fetchHeroes(1));
+    navigation.navigate('Heroes');
+  };
+
   return (
     <Container source={require(background)}>
       <Header>
@@ -115,7 +127,11 @@ export function Home({ navigation }: Props) {
           </SubTitle>
         </Animated.View>
         <Animated.View style={[animatedStyleButton, styles.button]}>
-          <Button title={"Let's Go"}/>
+          <Button 
+            onPress={fetchFirstListOfHeroes} 
+            title={"Let's Go"}
+            loading={loading_fetch_heroes}
+          />
         </Animated.View>
       </Footer>
     </Container>

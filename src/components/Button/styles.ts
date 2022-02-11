@@ -9,7 +9,7 @@ export const Container = styled.View`
 export const Content = styled(RectButton)`
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.red};
   padding: ${RFValue(12)}px 0;
   border-radius: ${RFValue(8)}px;
 `;
@@ -19,3 +19,8 @@ export const Title = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.title_light};
 `;
+
+export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
+  size: RFValue(28),
+  color: theme.colors.title_light
+}))``;

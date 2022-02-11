@@ -12,6 +12,8 @@ import {
 import AppLoading from 'expo-app-loading';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Routes } from './src/routes';
+import { Provider } from 'react-redux';
+import store from './src/store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,16 +26,18 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
+      <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <StatusBar 
-            barStyle='light-content'
-            backgroundColor='transparent'
-            translucent
-          />
-          <Routes />
+          <NavigationContainer>
+              <StatusBar 
+                barStyle='light-content'
+                backgroundColor='transparent'
+                translucent
+              />
+              <Routes />
+          </NavigationContainer>
         </ThemeProvider>
-      </NavigationContainer>
+      </Provider>
     </GestureHandlerRootView>
   );
 }

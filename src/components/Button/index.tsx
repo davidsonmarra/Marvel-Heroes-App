@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { RectButtonProps } from 'react-native-gesture-handler'
 import {
   Container,
   Content,
-  Title
+  Title,
+  Loading
 } from './styles';
 
 interface Props extends RectButtonProps {
   title: string;
+  loading: boolean;
 }
 
-export function Button({ title }: Props) {
+export function Button({ title, loading, ...rest }: Props) {
   return (
     <Container>
-      <Content onPress={() => console.log("Teste")}>
-        <Title numberOfLines={1}>{title}</Title>
+      <Content {...rest}>
+        <Title numberOfLines={1}>
+          {loading ? <Loading /> : title}
+        </Title>
       </Content>
     </Container>
   );
