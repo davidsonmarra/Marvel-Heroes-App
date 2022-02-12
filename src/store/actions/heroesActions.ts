@@ -14,7 +14,7 @@ export const fetchHeroes = (offset: number) => async (dispatch: Dispatch) => {
   dispatch({
     type: heroesActionTypes.FETCH_HEROES
   });
-  const ts = 1
+  const ts = String(new Date().getTime());
   const hashMD5 = (md5(
     `${ts}${PRIVATE_KEY}${PUBLIC_KEY}`
   ));

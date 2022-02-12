@@ -33,6 +33,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export function Home({ navigation }: Props) {
   const dispatch = useDispatch();
   const {
+    heroes,
     loading_fetch_heroes
   } = useSelector(({ heroesReducer }: IRootState) => heroesReducer);
   const background = '../../assets/home-background2.jpg';
@@ -103,9 +104,14 @@ export function Home({ navigation }: Props) {
   }, []);
 
   const fetchFirstListOfHeroes = () => {
-    dispatch(fetchHeroes(1));
-    navigation.navigate('Heroes');
+    dispatch(fetchHeroes(0));
   };
+
+  useEffect(() => {
+    !loading_fetch_heroes && heroes.length > 0 && (
+      navigation.navigate('Heroes')
+    );
+  }, [loading_fetch_heroes]);
 
   return (
     <Container source={require(background)}>

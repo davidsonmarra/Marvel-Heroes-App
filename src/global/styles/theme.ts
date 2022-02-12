@@ -7,7 +7,8 @@ export default {
     primary: '#BD1616',
     background: '#1A1A2E',
     header: '#FFFFFF22',
-    input: '#FFFFFF55'
+    input: '#FFFFFF55',
+    card: '#FFFFFF11'
   },
   fonts: {
     regular: 'Poppins_400Regular',

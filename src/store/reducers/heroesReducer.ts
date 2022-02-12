@@ -1,9 +1,10 @@
+import { HeroDTO } from "../../DTOs/HeroDTO";
 import { heroesActionTypes } from "../actions/heroesActions";
 
 interface Props {
   loading_fetch_heroes: boolean;
   error_fetch_heroes: string;
-  heroes: string[];
+  heroes: HeroDTO[];
 }
 
 interface ActionProps extends Props {
