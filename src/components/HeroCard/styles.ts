@@ -16,11 +16,14 @@ export const CardButton = styled(RectButton).attrs({
   activeOpacity: 0.5
 })`
   flex: 1;
+  border-radius: ${RFValue(8)}px;
 `;
 
 export const ImageWrapper = styled.View`
   width: 100%;
   height: ${RFValue(width / 3.5)}px;
+  justify-content: center;
+  align-items: center;
   border-radius: ${RFValue(8)}px;
 `;
 

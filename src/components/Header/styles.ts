@@ -2,6 +2,10 @@ import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
+interface SearchBoxProps {
+  enabled: boolean;
+}
+
 export const Container = styled.View`
   justify-content: center;
   align-items: center;
@@ -18,10 +22,15 @@ export const WrapperInput = styled.View`
   border-radius: ${RFValue(8)}px;
 `;
 
-export const SearchBox = styled.View`
+export const SearchBox = styled.View<SearchBoxProps>`
   width: 20%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme, enabled }) => (
+    enabled ? theme.colors.primary : theme.colors.primary
+  )};
+  opacity: ${({ enabled }) => (
+    enabled ? 1 : 0.5
+  )};
   border-top-right-radius: ${RFValue(8)}px;
   border-bottom-right-radius: ${RFValue(8)}px;
   border-left-width: ${RFValue(1)}px;

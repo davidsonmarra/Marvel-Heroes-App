@@ -20,6 +20,7 @@ export function Heroes({}: Props) {
     loading_fetch_heroes
   } = useSelector(({ heroesReducer }: IRootState) => heroesReducer);
   const [offset, setOffset] = useState(30);
+  const [search, setSearch] = useState('');
 
   const onEndReached = () => {
     setOffset(offset + 30);
@@ -28,7 +29,7 @@ export function Heroes({}: Props) {
 
   return (
     <Container>
-      <Header />
+      <Header setSearch={setSearch} search={search} />
       <List
         data={heroes}
         keyExtractor={item => `${item.id}`}

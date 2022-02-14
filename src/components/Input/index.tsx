@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { TextInputProps } from 'react-native'
 import {
   Container
 } from './styles';
 
-export function Input() {
+type Props = TextInputProps;
+
+export function Input({...rest}: Props) {
   return (
-    <Container />
+    <Container {...rest}/>
   );
 }

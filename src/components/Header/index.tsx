@@ -11,7 +11,12 @@ import {
   SearchButton
 } from './styles';
 
-export function Header() {
+interface Props {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>
+}
+
+export function Header({ search, setSearch }: Props) {
   const theme = useTheme();
   return (
     <Container>
@@ -20,9 +25,14 @@ export function Header() {
         height={RFValue(50)}
       />
       <WrapperInput>
-        <Input />
-        <SearchBox>
-          <SearchButton>
+        <Input
+          value={search}
+          onChangeText={setSearch}
+          autoCorrect={false}
+          autoCapitalize='sentences'
+        />
+        <SearchBox enabled={!!search}>
+          <SearchButton enabled={!!search}>
             <Ionicons 
               name="search"
               size={RFValue(24)}
