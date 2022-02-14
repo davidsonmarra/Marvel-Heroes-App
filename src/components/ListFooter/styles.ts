@@ -9,6 +9,6 @@ export const Container = styled.View`
 `;
 
 export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
-  size: RFValue(32),
+  size: 'large',
   color: theme.colors.primary
 }))``;

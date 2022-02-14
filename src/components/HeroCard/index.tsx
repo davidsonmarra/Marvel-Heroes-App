@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { HeroDTO } from '../../DTOs/HeroDTO';
 import {
   Container,
@@ -15,7 +15,7 @@ interface Props {
   index: number;
 }
 
-export function HeroCard({ data, index }: Props) {
+function HeroCardComponent({ data, index }: Props) {
   return (
     <Container>
       <CardButton>
@@ -30,3 +30,7 @@ export function HeroCard({ data, index }: Props) {
     </Container>
   );
 }
+
+export const HeroCard = memo(HeroCardComponent, (prevProps, nextProps) => {
+  return Object.is(prevProps.data, nextProps.data);
+});
