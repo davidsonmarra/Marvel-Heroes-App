@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from '../../components/Header';
 import { HeroCard } from '../../components/HeroCard';
+import { ListFooter } from '../../components/ListFooter';
 import { RootStackParamList } from '../../routes';
 import { IRootState } from '../../store';
 import { fetchHeroes } from '../../store/actions/heroesActions';
@@ -42,6 +43,9 @@ export function Heroes({}: Props) {
         )}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
+        ListFooterComponent={() => (
+          <ListFooter isLoading={loading_fetch_heroes} />
+        )}
       />
     </Container>
   );
