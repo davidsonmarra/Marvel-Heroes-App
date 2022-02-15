@@ -1,10 +1,12 @@
 import React from 'react';
 import { routes } from './routes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HeroDTO } from '../DTOs/HeroDTO';
 
 export type RootStackParamList = {
   Home: undefined;
   Heroes: undefined;
+  HeroDetails: { hero: HeroDTO };
 };
 
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
@@ -23,6 +25,7 @@ export function Routes() {
             key={routeObject.screenName}
             name={routeObject.screenName}
             component={routeObject.component}
+            options={routeObject.options}
           />
         ))
       }

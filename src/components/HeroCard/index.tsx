@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { HeroDTO } from '../../DTOs/HeroDTO';
 import {
   Container,
@@ -10,16 +10,19 @@ import {
   Name
 } from './styles';
 
+type CallbackType = (hero: HeroDTO) => void
+
 interface Props {
   data: HeroDTO;
   index: number;
   hasImage: boolean;
+  handlePressHero: CallbackType;
 }
 
-function HeroCardComponent({ data, index, hasImage }: Props) {
+function HeroCardComponent({ data, index, hasImage, handlePressHero }: Props) {
   return (
     <Container>
-      <CardButton onPress={() => {}}>
+      <CardButton onPress={() => handlePressHero(data)}>
         <ImageWrapper source={{ uri: `${data.thumbnail.path}/standard_fantastic.${data.thumbnail.extension}` }}>
           {
             hasImage && (

@@ -18,7 +18,7 @@ interface Props {
   setSearch: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function Header({ 
+export function HeaderHeroes({ 
   scrollY, 
   search, 
   setSearch 

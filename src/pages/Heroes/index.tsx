@@ -1,13 +1,16 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React, { 
+  useCallback, 
+  useEffect, 
+  useState 
+} from 'react';
 import { 
+  BackHandler,
   FlatList, 
   FlatListProps, 
   Keyboard, 
-  ListRenderItemInfo, 
-  Pressable
+  ListRenderItemInfo
 } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { 
   Easing, 
   useAnimatedScrollHandler, 
@@ -17,7 +20,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
-import { Header } from '../../components/Header';
+import { HeaderHeroes as Header } from '../../components/HeaderHeroes';
 import { HeroCard } from '../../components/HeroCard';
 import { ListFooter } from '../../components/ListFooter';
 import { HeroDTO } from '../../DTOs/HeroDTO';
@@ -33,7 +36,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Heroes'>;
 const List = Animated.createAnimatedComponent(FlatList as new (props: FlatListProps<HeroDTO>
   ) => FlatList<HeroDTO>);
 
-export function Heroes({}: Props) {
+export function Heroes({ navigation }: Props) {
   const dispatch = useDispatch();
   const {
     heroes,
@@ -67,6 +70,16 @@ export function Heroes({}: Props) {
     dispatch(fetchHeroes(offset));
   };
 
+  const goToHeroDetails = useCallback((hero: HeroDTO) => {
+    navigation.navigate('HeroDetails', { hero });
+  }, []);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+  }, []);
+
   return (
     <Container>
       <Header
@@ -82,10 +95,11 @@ export function Heroes({}: Props) {
         refreshing={loading_fetch_heroes}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }: ListRenderItemInfo<HeroDTO>) => (
-          <HeroCard 
+          <HeroCard
             data={item} 
             index={index}
-            hasImage={item.thumbnail.path.includes('image_not_available')} 
+            hasImage={item.thumbnail.path.includes('image_not_available')}
+            handlePressHero={goToHeroDetails}
           />
         )}
         onEndReached={onEndReached}
