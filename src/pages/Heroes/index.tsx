@@ -82,7 +82,11 @@ export function Heroes({}: Props) {
         refreshing={loading_fetch_heroes}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }: ListRenderItemInfo<HeroDTO>) => (
-          <HeroCard data={item} index={index} />
+          <HeroCard 
+            data={item} 
+            index={index}
+            hasImage={item.thumbnail.path.includes('image_not_available')} 
+          />
         )}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}

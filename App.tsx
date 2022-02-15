@@ -7,7 +7,8 @@ import {
   useFonts,
   Poppins_400Regular,
   Poppins_500Medium,
-  Poppins_700Bold
+  Poppins_700Bold,
+  Poppins_700Bold_Italic
 } from '@expo-google-fonts/poppins';
 import AppLoading from 'expo-app-loading';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -19,7 +20,8 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
-    Poppins_700Bold
+    Poppins_700Bold,
+    Poppins_700Bold_Italic
   });
   if(!fontsLoaded) 
     return <AppLoading />

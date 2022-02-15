@@ -13,6 +13,7 @@ export default {
   fonts: {
     regular: 'Poppins_400Regular',
     medium: 'Poppins_500Medium',
-    bold: 'Poppins_700Bold'
+    bold: 'Poppins_700Bold',
+    italic_bold: 'Poppins_700Bold_Italic'
   }
 }

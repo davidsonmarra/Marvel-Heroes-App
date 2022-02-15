@@ -12,14 +12,17 @@ export const Container = styled.View`
   border-radius: ${RFValue(8)}px;
 `;
 
-export const CardButton = styled(RectButton).attrs({
-  activeOpacity: 0.5
-})`
+export const CardButton = styled(RectButton).attrs(({ theme }) => ({
+  activeOpacity: 0.5,
+  rippleColor: theme.colors.header
+}))`
   flex: 1;
   border-radius: ${RFValue(8)}px;
 `;
 
-export const ImageWrapper = styled.View`
+export const ImageWrapper = styled.ImageBackground.attrs({
+  imageStyle:{borderRadius: RFValue(8)}
+})`
   width: 100%;
   height: ${RFValue(width / 3.5)}px;
   justify-content: center;
@@ -27,11 +30,12 @@ export const ImageWrapper = styled.View`
   border-radius: ${RFValue(8)}px;
 `;
 
-export const Thumbnail = styled.Image`
-  width: 100%;
-  height: 100%;
-  border-top-right-radius: ${RFValue(8)}px;
-  border-top-left-radius: ${RFValue(8)}px;
+export const Index = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.italic_bold};
+  font-size: ${RFValue(20)}px;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.title_light};
+
 `;
 
 export const Divider = styled.View`
@@ -52,6 +56,7 @@ export const Info = styled.View`
 
 export const Name = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
+  font-size: ${RFValue(12)}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.title_light};
 `;
