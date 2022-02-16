@@ -21,7 +21,10 @@ export const CardButton = styled(RectButton).attrs(({ theme }) => ({
 `;
 
 export const ImageWrapper = styled.ImageBackground.attrs({
-  imageStyle:{borderRadius: RFValue(8)}
+  imageStyle: { 
+    borderTopRightRadius: RFValue(8),
+    borderTopLeftRadius: RFValue(8)
+  }
 })`
   width: 100%;
   height: ${RFValue(width / 3.5)}px;
@@ -35,7 +38,6 @@ export const Index = styled.Text`
   font-size: ${RFValue(20)}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.title_light};
-
 `;
 
 export const Divider = styled.View`

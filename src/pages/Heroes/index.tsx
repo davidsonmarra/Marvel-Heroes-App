@@ -70,8 +70,8 @@ export function Heroes({ navigation }: Props) {
     dispatch(fetchHeroes(offset));
   };
 
-  const goToHeroDetails = useCallback((hero: HeroDTO) => {
-    navigation.navigate('HeroDetails', { hero });
+  const goToHeroDetails = useCallback((hero: HeroDTO, index: number) => {
+    navigation.navigate('HeroDetails', { hero, index });
   }, []);
 
   useEffect(() => {

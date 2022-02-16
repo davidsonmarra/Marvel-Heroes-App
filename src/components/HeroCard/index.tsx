@@ -10,7 +10,7 @@ import {
   Name
 } from './styles';
 
-type CallbackType = (hero: HeroDTO) => void
+type CallbackType = (hero: HeroDTO, index: number) => void
 
 interface Props {
   data: HeroDTO;
@@ -22,7 +22,7 @@ interface Props {
 function HeroCardComponent({ data, index, hasImage, handlePressHero }: Props) {
   return (
     <Container>
-      <CardButton onPress={() => handlePressHero(data)}>
+      <CardButton onPress={() => handlePressHero(data, index)}>
         <ImageWrapper source={{ uri: `${data.thumbnail.path}/standard_fantastic.${data.thumbnail.extension}` }}>
           {
             hasImage && (

@@ -6,7 +6,7 @@ import { HeroDTO } from '../DTOs/HeroDTO';
 export type RootStackParamList = {
   Home: undefined;
   Heroes: undefined;
-  HeroDetails: { hero: HeroDTO };
+  HeroDetails: { hero: HeroDTO, index: number };
 };
 
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
