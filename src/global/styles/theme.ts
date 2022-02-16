@@ -8,7 +8,8 @@ export default {
     background: '#1A1A2E',
     header: '#FFFFFF22',
     input: '#FFFFFF55',
-    card: '#FFFFFF11'
+    card: '#FFFFFF11',
+    info: '#D8D8D8'
   },
   fonts: {
     regular: 'Poppins_400Regular',

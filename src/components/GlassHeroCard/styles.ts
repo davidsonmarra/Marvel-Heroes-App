@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
@@ -21,7 +21,7 @@ export const Glass = styled(BlurView).attrs({
   border-radius: ${RFValue(20)}px;
   border-width: ${RFValue(2)}px;
   border-color: ${({ theme }) => theme.colors.header};
-  overflow: hidden;
+  overflow: ${Platform.OS === 'ios' ? 'hidden' : 'visible'};
 `;
 
 export const Gradient = styled(LinearGradient).attrs({
@@ -33,4 +33,5 @@ export const Gradient = styled(LinearGradient).attrs({
 })`
   width: 100%;
   height: 100%;
+  border-radius: ${RFValue(20)}px;
 `;

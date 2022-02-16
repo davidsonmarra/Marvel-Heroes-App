@@ -9,7 +9,11 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 
-export const Thumbnail = styled.ImageBackground`
+export const Thumbnail = styled.ImageBackground.attrs({
+  imageStyle: {
+    borderRadius: RFValue(20)
+  }
+})`
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -20,6 +24,31 @@ export const Index = styled.Text`
   font-size: ${RFValue(50)}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.title_light};
+`;
+
+export const Infos = styled.View`
+  flex: 1;
+  padding: ${RFValue(16)}px ${RFValue(12)}px;
+  justify-content: center;
+`;
+
+export const RowInformation = styled.View`
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
+export const Title = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.bold};
+  font-size: ${RFValue(16)}px;
+  color: ${({ theme }) => theme.colors.title_light};
+`;
+
+export const Info = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(16)}px;
+  color: ${({ theme }) => theme.colors.info};
 `;
 
 export const RotateButton = styled(BorderlessButton)`

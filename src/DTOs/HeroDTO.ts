@@ -6,4 +6,5 @@ export interface HeroDTO {
     extension: string;
   };
   resourceURI: string;
+  description: string;
 }
