@@ -24,7 +24,7 @@ export function HandAnimation() {
       animation.value = withTiming(
         100, 
         { 
-          duration: 5000,
+          duration: 10000,
           easing: Easing.bezier(.42,0,.58,1)
         }
       );
@@ -32,11 +32,11 @@ export function HandAnimation() {
   })
 
   return (
-    <Animated.View style={animationtyle}>
+    <Animated.View style={[animationtyle, { position: 'absolute', bottom: 0, height: RFValue(80), justifyContent: 'center' }]}>
       <LottieView
         source={hand}
         style={{
-          height: RFValue(100)
+          height: RFValue(200)
         }}
         resizeMode="contain"
         autoPlay
