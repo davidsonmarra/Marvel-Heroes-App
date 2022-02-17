@@ -1,11 +1,35 @@
 {
   "expo": {
-    "name": "marvel-heroes",
+    "name": "Marvel Heroes",
     "slug": "marvel-heroes",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "icon": "./resources/icon.png",
+    "splash": {
+      "image": "./resources/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1A1A2E"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./resources/adaptive-icon.png",
+        "backgroundColor": "#1A1A2E"
+      },
+      "package": "com.marvelheroes",
+      "versionCode": 1
+    },
+    "description": "Um app para você conhecer mais sobre os heróis da Marvel!",
+    "githubUrl": "https://github.com/davidsonmarra/Marvel-Heroes-App",
+    "ios": {
+      "bundleIdentifier": "com.marvelheroes"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#1A1A2E",
+      "translucent": true,
+      "barStyle": "light-content"
+    }
   },
-  "name": "marvel-heroes"
+  "name": "Marvel Heroes"
 }

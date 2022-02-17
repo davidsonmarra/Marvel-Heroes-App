@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { BorderlessButton } from 'react-native-gesture-handler';
+import { BorderlessButton, ScrollView } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -26,11 +26,14 @@ export const Index = styled.Text`
   color: ${({ theme }) => theme.colors.title_light};
 `;
 
-export const Infos = styled.View`
-  flex: 1;
-  padding: ${RFValue(16)}px ${RFValue(12)}px;
-  justify-content: center;
-`;
+export const Infos = styled(ScrollView).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    justifyContent: 'center',
+    paddingVertical: RFValue(16),
+    paddingHorizontal: RFValue(12)
+  }
+})``;
 
 export const RowInformation = styled.View`
   flex-direction: row;

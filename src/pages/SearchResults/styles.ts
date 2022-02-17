@@ -7,3 +7,14 @@ export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
 `;
+
+export const List = styled(
+  FlatList as new (props: FlatListProps<HeroDTO>
+) => FlatList<HeroDTO>).attrs({
+  contentContainerStyle: {
+    paddingHorizontal: RFValue(8),
+    paddingVertical: RFValue(12),
+    alignItems: 'center'
+  },
+  showsVerticalScrollIndicator: false
+})``;

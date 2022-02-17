@@ -6,6 +6,7 @@ import { HeroDTO } from '../DTOs/HeroDTO';
 export type RootStackParamList = {
   Home: undefined;
   Heroes: undefined;
+  SearchResults: undefined;
   HeroDetails: { hero: HeroDTO, index: number };
 };
 

@@ -1,15 +1,27 @@
+import styled, { css } from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 interface SearchBoxProps {
   enabled: boolean;
 }
 
-export const Container = styled.View`
-  justify-content: center;
-  align-items: center;
-  padding: ${RFValue(30)}px 0 ${RFValue(16)}px;
+interface ContainerProps {
+  hasBackButton: boolean;
+}
+
+export const Container = styled.View<ContainerProps>`
+  ${({ hasBackButton }) => (hasBackButton ? css`
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  ` : css`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `)};
+  padding: ${RFValue(30 + getStatusBarHeight())}px 0 ${RFValue(16)}px;
   background-color: ${({ theme }) => theme.colors.header};
 `;
 
@@ -42,3 +54,8 @@ export const SearchButton = styled(RectButton)`
   justify-content: center;
   align-items: center;
 `;
+
+export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
+  size: RFValue(24),
+  color: theme.colors.title_light
+}))``;

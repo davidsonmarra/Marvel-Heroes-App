@@ -8,20 +8,30 @@ import {
   Container,
   SearchBox,
   WrapperInput,
-  SearchButton
+  SearchButton,
+  Loading
 } from './styles';
 import Animated, { interpolate, SharedValue, useAnimatedStyle } from 'react-native-reanimated';
+import { BackButton } from '../BackButton';
+
+type CallbackType = (value: string) => void;
 
 interface Props {
   scrollY: SharedValue<number>;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>
+  handleSearchHero: CallbackType;
+  isLoading: boolean;
+  handleGoBack?: () => void | undefined;
 }
 
 export function HeaderHeroes({ 
   scrollY, 
   search, 
-  setSearch 
+  setSearch,
+  handleSearchHero,
+  isLoading,
+  handleGoBack = undefined
 }: Props) {
   const theme = useTheme();
 
@@ -41,14 +51,29 @@ export function HeaderHeroes({
   });
 
   return (
-    <Container>
-      <Animated.View style={[logoStyleAnimation]}>
-        <AvengersLogo 
-          fill={theme.colors.title_light}
-          height="100%"
-        />
-      </Animated.View>
+    <Container hasBackButton={!!handleGoBack}>
+      {
+        !handleGoBack && (
+          <Animated.View style={[logoStyleAnimation]}>
+            <AvengersLogo 
+              fill={theme.colors.title_light}
+              height="100%"
+            />
+          </Animated.View>
+        )
+      }
       <WrapperInput>
+        {
+          handleGoBack && (
+            <BackButton
+              onPress={handleGoBack}
+              style={{
+                position: 'absolute',
+                left: -RFValue(35)
+              }} 
+            />
+          )
+        }
         <Input
           value={search}
           placeholder='Hero'
@@ -57,12 +82,18 @@ export function HeaderHeroes({
           autoCapitalize='sentences'
         />
         <SearchBox enabled={!!search}>
-          <SearchButton enabled={!!search}>
-            <Ionicons 
-              name="search"
-              size={RFValue(24)}
-              color={theme.colors.title_light}
-            />
+          <SearchButton onPress={() => handleSearchHero(search)} enabled={!!search}>
+            {
+              isLoading ? (
+                <Loading />
+              ) : (
+                <Ionicons 
+                  name="search"
+                  size={RFValue(24)}
+                  color={theme.colors.title_light}
+                />
+              )
+            }
           </SearchButton>
         </SearchBox>
       </WrapperInput>

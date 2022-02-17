@@ -19,11 +19,11 @@ interface Props {
   handlePressHero: CallbackType;
 }
 
-function HeroCardComponent({ data, index, hasImage, handlePressHero }: Props) {
+function HeroBigCardComponent({ data, index, hasImage, handlePressHero }: Props) {
   return (
     <Container>
       <CardButton onPress={() => handlePressHero(data, index)}>
-        <ImageWrapper source={{ uri: `${data.thumbnail.path}/standard_fantastic.${data.thumbnail.extension}` }}>
+        <ImageWrapper source={{ uri: `${data.thumbnail.path}/standard_large.${data.thumbnail.extension}` }}>
           {
             hasImage && (
               <Index>{`# ${index}`}</Index>
@@ -32,13 +32,13 @@ function HeroCardComponent({ data, index, hasImage, handlePressHero }: Props) {
         </ImageWrapper>
         <Divider />
         <Info>
-          <Name numberOfLines={2}>{data.name}</Name>
+          <Name>{data.name}</Name>
         </Info>
       </CardButton>
     </Container>
   );
 }
 
-export const HeroCard = memo(HeroCardComponent, (prevProps, nextProps) => {
+export const HeroBigCard = memo(HeroBigCardComponent, (prevProps, nextProps) => {
   return Object.is(prevProps.data, nextProps.data);
 });

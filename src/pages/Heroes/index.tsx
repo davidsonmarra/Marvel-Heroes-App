@@ -27,6 +27,7 @@ import { HeroDTO } from '../../DTOs/HeroDTO';
 import { RootStackParamList } from '../../routes';
 import { IRootState } from '../../store';
 import { fetchHeroes } from '../../store/actions/heroesActions';
+import { fetchSearchHeroes, reset } from '../../store/actions/heroesSearchActions';
 import {
   Container
 } from './styles';
@@ -42,6 +43,11 @@ export function Heroes({ navigation }: Props) {
     heroes,
     loading_fetch_heroes
   } = useSelector(({ heroesReducer }: IRootState) => heroesReducer);
+  const {
+    heroes_search,
+    loading_fetch_heroes_search
+  } = useSelector(({ heroesSearchReducer }: IRootState) => heroesSearchReducer);
+
   const [offset, setOffset] = useState(30);
   const [search, setSearch] = useState('');
 
@@ -70,6 +76,11 @@ export function Heroes({ navigation }: Props) {
     dispatch(fetchHeroes(offset));
   };
 
+  const handleSearchHero = useCallback((value: string) => {
+    dispatch(reset());
+    dispatch(fetchSearchHeroes(value, 0));
+  }, []);
+
   const goToHeroDetails = useCallback((hero: HeroDTO, index: number) => {
     navigation.navigate('HeroDetails', { hero, index });
   }, []);
@@ -80,12 +91,20 @@ export function Heroes({ navigation }: Props) {
     });
   }, []);
 
+  useEffect(() => {
+    !loading_fetch_heroes_search && heroes_search.length > 0 && (
+      navigation.navigate('SearchResults')
+    );
+  }, [loading_fetch_heroes_search]);
+
   return (
     <Container>
       <Header
         setSearch={setSearch}
         search={search}
         scrollY={scrollY}
+        handleSearchHero={handleSearchHero}
+        isLoading={loading_fetch_heroes_search}
       />
       <List
         data={heroes}
