@@ -9,6 +9,7 @@ export const Container = styled.View`
 export const Content = styled(RectButton)`
   justify-content: center;
   align-items: center;
+  height: ${RFValue(50)}px;
   background-color: ${({ theme }) => theme.colors.red};
   padding: ${RFValue(12)}px 0;
   border-radius: ${RFValue(8)}px;

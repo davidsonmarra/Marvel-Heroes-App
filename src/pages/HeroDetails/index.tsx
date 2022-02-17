@@ -15,10 +15,12 @@ import {
   Info,
   Infos
 } from './styles';
+import { BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HeroDetails'>;
 
-export function HeroDetails({ route }: Props) {
+export function HeroDetails({ navigation, route }: Props) {
   const { hero, index } = route.params;
   const flipRef = useRef<CardFlip>(null);
   const hasImage = hero.thumbnail.path.includes('image_not_available');
@@ -26,6 +28,15 @@ export function HeroDetails({ route }: Props) {
   const handleFlipCard = useCallback(() => {
     flipRef.current?.flip();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        navigation.goBack();
+        return true;
+      });
+    }, [route])
+  );
 
   return (
     <Container>

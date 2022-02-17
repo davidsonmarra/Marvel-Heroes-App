@@ -1,3 +1,4 @@
+import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { 
   useCallback, 
@@ -37,7 +38,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Heroes'>;
 const List = Animated.createAnimatedComponent(FlatList as new (props: FlatListProps<HeroDTO>
   ) => FlatList<HeroDTO>);
 
-export function Heroes({ navigation }: Props) {
+export function Heroes({ navigation, route }: Props) {
   const dispatch = useDispatch();
   const {
     heroes,
@@ -85,11 +86,16 @@ export function Heroes({ navigation }: Props) {
     navigation.navigate('HeroDetails', { hero, index });
   }, []);
 
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      return true;
-    });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        if(route.name !== 'Heroes')
+          return false; 
+        else 
+          return true;
+      });
+    }, [route])
+  );
 
   useEffect(() => {
     !loading_fetch_heroes_search && heroes_search.length > 0 && (

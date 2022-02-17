@@ -1,6 +1,7 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState, useCallback } from 'react';
-import { Keyboard } from 'react-native';
+import { BackHandler, Keyboard } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderHeroes as Header} from '../../components/HeaderHeroes';
@@ -16,7 +17,7 @@ import {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HeroDetails'>;
 
-export function SearchResults({ navigation }: Props) {
+export function SearchResults({ navigation, route }: Props) {
   const scrollY = useSharedValue(0);
   const [offset, setOffset] = useState(10);
   const dispatch = useDispatch();
@@ -44,10 +45,18 @@ export function SearchResults({ navigation }: Props) {
     dispatch(fetchSearchHeroes(search, offset));
   };
 
-
   const goToHeroDetails = useCallback((hero: HeroDTO, index: number) => {
     navigation.navigate('HeroDetails', { hero, index });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        navigation.goBack();
+        return true;
+      });
+    }, [route])
+  );
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { routes } from './routes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HeroDTO } from '../DTOs/HeroDTO';
