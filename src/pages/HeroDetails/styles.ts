@@ -7,6 +7,7 @@ export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Thumbnail = styled.ImageBackground.attrs({
