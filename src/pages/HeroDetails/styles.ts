@@ -2,12 +2,29 @@ import styled from 'styled-components/native';
 import { BorderlessButton, ScrollView } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { RFValue } from 'react-native-responsive-fontsize';
+import { StyleSheet } from 'react-native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.background};
   justify-content: center;
   align-items: center;
+  background-color: ${({ theme }) => theme.colors.background};
+  z-index: 3;
+`;
+
+export const styles = StyleSheet.create({
+  blackView: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    backgroundColor: '#00000066',
+    zIndex: 2
+  }
+});
+
+export const Content = styled.View`
+  z-index: 1;
+  justify-content: center;
 `;
 
 export const Thumbnail = styled.ImageBackground.attrs({
@@ -54,18 +71,3 @@ export const Info = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.info};
 `;
-
-export const RotateButton = styled(BorderlessButton)`
-  width: ${RFValue(50)}px;
-  height: ${RFValue(50)}px;
-  align-self: center;
-  background-color: ${({ theme }) => theme.colors.header};
-  border-radius: ${RFValue(25)}px;
-  margin-bottom: ${RFValue(50)}px;
-`;
-
-export const RotateIcon = styled(MaterialIcons).attrs(({ theme }) => ({
-  name: 'rotate-left',
-  size: RFValue(50),
-  color: theme.colors.primary
-}))``;

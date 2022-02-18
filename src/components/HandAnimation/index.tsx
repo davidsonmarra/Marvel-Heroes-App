@@ -1,12 +1,16 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import LottieView from 'lottie-react-native';
 import hand from '../../assets/handAnimation.json';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
-import { HeroDTO } from '../../DTOs/HeroDTO';
+import { useWindowDimensions, View } from 'react-native';
 
-export function HandAnimation() {
+interface Props {
+  isClose: boolean;
+}
+
+export function HandAnimation({ isClose }: Props) {
   const ref = useRef<LottieView>(null);
   const animation = useSharedValue(0);
 
@@ -22,25 +26,30 @@ export function HandAnimation() {
 
   useFocusEffect(() => {
     ref.current?.play();
-    animation.value = 0;
-    animation.value = withTiming(
-      100, 
-      { 
-        duration: 5000,
-        easing: Easing.bezier(.42,0,.58,1)
-      }
-    );
   });
+  
+  useEffect(() => {    
+    if(isClose) {
+      animation.value = withTiming(
+        100, 
+        { 
+          duration: 2500,
+          easing: Easing.bezier(.42,0,.58,1)
+        }
+      );
+    }
+  }, [isClose]);
 
   return (
-    <Animated.View style={[animationStyle, { position: 'absolute', bottom: 0, height: RFValue(80), justifyContent: 'center' }]}>
+    <Animated.View style={[animationStyle, { zIndex: 3, position: 'absolute', height: RFValue(80), transform: [{translateY: RFValue(100)}], justifyContent: 'center' }]}>
       <LottieView
         ref={ref}
         source={hand}
         style={{
-          height: RFValue(200)
+          width: RFValue(200)
         }}
         resizeMode="contain"
+        autoPlay
         loop
       />
     </Animated.View>
