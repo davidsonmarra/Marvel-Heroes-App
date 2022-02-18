@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -25,6 +25,7 @@ import {
 } from './styles';
 import { IRootState } from '../../store';
 import { fetchHeroes } from '../../store/actions/heroesActions';
+import { reset } from '../../store/actions/heroesSearchActions';
 
 const { width } = Dimensions.get('window');
 

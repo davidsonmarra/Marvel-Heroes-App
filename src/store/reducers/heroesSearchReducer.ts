@@ -3,6 +3,7 @@ import { heroesSearchActionTypes } from "../actions/heroesSearchActions";
 
 interface Props {
   search: string;
+  isEnd: boolean;
   loading_fetch_heroes_search: boolean;
   error_fetch_heroes_search: string;
   heroes_search: HeroDTO[];
@@ -15,6 +16,7 @@ interface ActionProps extends Props {
 
 const INITIAL_STATE: Props = {
   search: '',
+  isEnd: false,
   loading_fetch_heroes_search: false,
   error_fetch_heroes_search: '',
   heroes_search: []
@@ -32,6 +34,7 @@ export default (state = INITIAL_STATE, action: ActionProps) => {
     case heroesSearchActionTypes.FETCH_HEROES_SEARCH_SUCCESS:
       return {
         ...state,
+        isEnd: action.payload?.length < 10 ? true : false,
         loading_fetch_heroes_search: false,
         error_fetch_heroes_search: '',
         heroes_search: state.heroes_search.concat(action.payload)
@@ -47,6 +50,7 @@ export default (state = INITIAL_STATE, action: ActionProps) => {
     case heroesSearchActionTypes.RESET:
       return {
         ...state,
+        isEnd: false,
         heroes_search: [],
         search: '',
       }

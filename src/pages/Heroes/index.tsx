@@ -88,6 +88,7 @@ export function Heroes({ navigation, route }: Props) {
 
   useFocusEffect(
     useCallback(() => {
+      setSearch('');
       BackHandler.addEventListener('hardwareBackPress', () => {
         if(route.name !== 'Heroes')
           return false; 
@@ -98,7 +99,7 @@ export function Heroes({ navigation, route }: Props) {
   );
 
   useEffect(() => {
-    !loading_fetch_heroes_search && heroes_search.length > 0 && (
+    !loading_fetch_heroes_search && !!search && (
       navigation.navigate('SearchResults')
     );
   }, [loading_fetch_heroes_search]);

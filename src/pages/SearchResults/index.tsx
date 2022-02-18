@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HeaderHeroes as Header} from '../../components/HeaderHeroes';
 import { HeroBigCard } from '../../components/HeroBigCard';
 import { ListFooter } from '../../components/ListFooter';
+import { NotFoundAnimation } from '../../components/NotFoundAnimation';
 import { HeroDTO } from '../../DTOs/HeroDTO';
 import { RootStackParamList } from '../../routes';
 import { IRootState } from '../../store';
 import { fetchSearchHeroes, reset } from '../../store/actions/heroesSearchActions';
 import {
-  Container, List
+  Container, 
+  List,
+  Empty
 } from './styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HeroDetails'>;
@@ -23,6 +26,7 @@ export function SearchResults({ navigation, route }: Props) {
   const dispatch = useDispatch();
   const {
     search,
+    isEnd,
     heroes_search,
     loading_fetch_heroes_search
   } = useSelector(({ heroesSearchReducer }: IRootState) => heroesSearchReducer);
@@ -41,8 +45,10 @@ export function SearchResults({ navigation, route }: Props) {
   }, []);
 
   const onEndReached = () => {
-    setOffset(offset + 10);
-    dispatch(fetchSearchHeroes(search, offset));
+    if(!isEnd) {
+      setOffset(offset + 10);
+      dispatch(fetchSearchHeroes(search, offset));
+    }
   };
 
   const goToHeroDetails = useCallback((hero: HeroDTO, index: number) => {
@@ -67,6 +73,7 @@ export function SearchResults({ navigation, route }: Props) {
         handleSearchHero={handleFetchHeroes}
         isLoading={loading_fetch_heroes_search && !offset}
         handleGoBack={handleGoBack}
+        disable={value !== search}
       />
       <List
         data={heroes_search}
@@ -83,10 +90,21 @@ export function SearchResults({ navigation, route }: Props) {
             handlePressHero={goToHeroDetails}
           />
         )}
+        ListEmptyComponent={() => (
+          <Empty>
+            {
+              loading_fetch_heroes_search ? (
+                <ListFooter isLoading={loading_fetch_heroes_search} />
+              ) : (
+                <NotFoundAnimation /> 
+              )   
+            }
+          </Empty>
+        )}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => (
-          <ListFooter isLoading={loading_fetch_heroes_search} />
+          <ListFooter isLoading={loading_fetch_heroes_search && !!heroes_search?.length} />
         )}
         onTouchStart={Keyboard.dismiss}
       />

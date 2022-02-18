@@ -13,6 +13,7 @@ import {
 } from './styles';
 import Animated, { interpolate, SharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { BackButton } from '../BackButton';
+import { Keyboard } from 'react-native';
 
 type CallbackType = (value: string) => void;
 
@@ -23,6 +24,7 @@ interface Props {
   handleSearchHero: CallbackType;
   isLoading: boolean;
   handleGoBack?: () => void | undefined;
+  disable?: boolean;
 }
 
 export function HeaderHeroes({ 
@@ -31,7 +33,8 @@ export function HeaderHeroes({
   setSearch,
   handleSearchHero,
   isLoading,
-  handleGoBack = undefined
+  handleGoBack = undefined,
+  disable = true
 }: Props) {
   const theme = useTheme();
 
@@ -81,8 +84,14 @@ export function HeaderHeroes({
           autoCorrect={false}
           autoCapitalize='sentences'
         />
-        <SearchBox enabled={!!search}>
-          <SearchButton onPress={() => handleSearchHero(search)} enabled={!!search}>
+        <SearchBox enabled={!!search && disable}>
+          <SearchButton 
+            onPress={() => {
+              Keyboard.dismiss();
+              handleSearchHero(search)
+            }} 
+            enabled={!!search && disable}
+          >
             {
               isLoading ? (
                 <Loading />

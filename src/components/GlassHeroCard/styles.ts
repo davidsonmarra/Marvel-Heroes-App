@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions, Platform } from 'react-native';
 
-const { height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export const Container = styled.View`
   justify-content: center;
@@ -15,7 +15,7 @@ export const Glass = styled(BlurView).attrs({
   tint: "light",
   intensity: 20
 })`
-  width: ${RFValue(height / 2.5)}px;
+  width: ${RFValue(width / 1.3)}px;
   height: ${RFValue((height / 2.5) * 1.5)}px;
   align-self: center; 
   border-radius: ${RFValue(20)}px;
