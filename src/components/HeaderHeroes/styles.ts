@@ -38,11 +38,11 @@ export const WrapperInput = styled.View`
   border-radius: ${RFValue(8)}px;
 `;
 
-export const SearchBox = styled.View`
+export const SearchBox = styled.View<SearchBoxProps>`
   width: 20%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.primary};
-  opacity: 1;
+  opacity: ${({ enabled }) => ( enabled ? 1 : .5)};
   border-top-right-radius: ${RFValue(8)}px;
   border-bottom-right-radius: ${RFValue(8)}px;
   border-left-width: ${RFValue(1)}px;

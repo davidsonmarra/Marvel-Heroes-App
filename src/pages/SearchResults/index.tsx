@@ -36,6 +36,7 @@ export function SearchResults({ navigation, route }: Props) {
   } = useSelector(({ heroesSearchReducer }: IRootState) => heroesSearchReducer);
 
   const handleSearchHero = (({ searchHero }: FormData) => {
+    Keyboard.dismiss();
     if(search !== searchHero) {
       setOffset(10);
       dispatch(reset());
@@ -70,6 +71,7 @@ export function SearchResults({ navigation, route }: Props) {
   return (
     <Container>
       <Header
+        search={search}
         scrollY={scrollY}
         handleSearchHero={handleSearchHero}
         isLoading={loading_fetch_heroes_search && !offset}
