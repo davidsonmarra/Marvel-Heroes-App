@@ -5,7 +5,6 @@ import AvengersLogo from '../../assets/avengers.svg';
 import { Ionicons } from '@expo/vector-icons'; 
 import { Input } from '../Form/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Container,
@@ -18,39 +17,27 @@ import { BackButton } from '../BackButton';
 import { Button } from '../Form/Button';
 import { RouteProp, useFocusEffect, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes';
+import { schema } from './schema';
 
 interface Props {
-  search: string;
+  search?: string;
   scrollY: SharedValue<number>;
   handleSearchHero: SubmitHandler<IFormInput>;
   isLoading: boolean;
   handleGoBack?: () => void | undefined;
 }
-
 export interface IFormInput {
   searchHero: string;
   originalSearch: string;
 }
 
-const schema = Yup.object().shape({
-  searchHero: Yup
-    .string()
-    .required('Search cannot be empty')
-    .test('search-match', "Search can't be repeat.", function(value) {
-      return this.parent.originalSearch !== value;
-    }),
-  originalSearch: Yup
-    .string()
-}); 
-
 export function HeaderHeroes({ 
-  search,
+  search = '',
   scrollY, 
   handleSearchHero,
   isLoading,
   handleGoBack = undefined,
 }: Props) {
-  console.log('SEARCH: ', search)
   const route = useRoute<RouteProp<RootStackParamList, 'Heroes'>>();
   const theme = useTheme();
   const {
@@ -79,7 +66,7 @@ export function HeaderHeroes({
     const currentValue = getValues('searchHero');
     currentValue === search && setError('searchHero', {
       type: "manual",
-      message: "ASD"
+      message: "Search can't be repeat."
     })
   }, [search])
 

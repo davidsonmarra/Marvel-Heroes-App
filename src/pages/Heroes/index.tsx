@@ -10,7 +10,8 @@ import {
   FlatList, 
   FlatListProps, 
   Keyboard, 
-  ListRenderItemInfo
+  ListRenderItemInfo,
+  View
 } from 'react-native';
 import Animated, { 
   Easing, 
@@ -42,6 +43,7 @@ const List = Animated.createAnimatedComponent(FlatList as new (props: FlatListPr
 export function Heroes({ navigation, route }: Props) {
   const dispatch = useDispatch();
   const {
+    is_end,
     heroes,
     loading_fetch_heroes
   } = useSelector(({ heroesReducer }: IRootState) => heroesReducer);
@@ -73,8 +75,10 @@ export function Heroes({ navigation, route }: Props) {
   });
 
   const onEndReached = () => {
-    setOffset(offset + 30);
-    dispatch(fetchHeroes(offset));
+    if(!is_end) {
+      setOffset(offset + 30);
+      dispatch(fetchHeroes(offset));
+    }
   };
 
   const handleSearchHero = ({ searchHero }: FormData) => {
