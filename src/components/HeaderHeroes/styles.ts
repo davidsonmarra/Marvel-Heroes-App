@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
@@ -9,6 +9,10 @@ interface SearchBoxProps {
 
 interface ContainerProps {
   hasBackButton: boolean;
+}
+
+interface ButtonProps extends RectButtonProps {
+  onPress: () => void;
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -34,25 +38,15 @@ export const WrapperInput = styled.View`
   border-radius: ${RFValue(8)}px;
 `;
 
-export const SearchBox = styled.View<SearchBoxProps>`
+export const SearchBox = styled.View`
   width: 20%;
   height: 100%;
-  background-color: ${({ theme, enabled }) => (
-    enabled ? theme.colors.primary : theme.colors.primary
-  )};
-  opacity: ${({ enabled }) => (
-    enabled ? 1 : 0.5
-  )};
+  background-color: ${({ theme }) => theme.colors.primary};
+  opacity: 1;
   border-top-right-radius: ${RFValue(8)}px;
   border-bottom-right-radius: ${RFValue(8)}px;
   border-left-width: ${RFValue(1)}px;
   border-left-color: ${({ theme }) => theme.colors.black};
-`;
-
-export const SearchButton = styled(RectButton)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({

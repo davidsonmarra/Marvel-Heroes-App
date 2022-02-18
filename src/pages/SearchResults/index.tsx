@@ -20,6 +20,10 @@ import {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HeroDetails'>;
 
+export interface FormData {
+  searchHero: string;
+}
+
 export function SearchResults({ navigation, route }: Props) {
   const scrollY = useSharedValue(0);
   const [offset, setOffset] = useState(10);
@@ -30,15 +34,14 @@ export function SearchResults({ navigation, route }: Props) {
     heroes_search,
     loading_fetch_heroes_search
   } = useSelector(({ heroesSearchReducer }: IRootState) => heroesSearchReducer);
-  const [value, setValue] = useState(search);
 
-  const handleFetchHeroes = useCallback((value: string) => {
-    if(search !== value) {
+  const handleSearchHero = (({ searchHero }: FormData) => {
+    if(search !== searchHero) {
       setOffset(10);
       dispatch(reset());
-      dispatch(fetchSearchHeroes(value, 0));
+      dispatch(fetchSearchHeroes(searchHero, 0));
     }
-  }, [value]);
+  });
 
   const handleGoBack = useCallback(() => {
     navigation.goBack();
@@ -67,13 +70,10 @@ export function SearchResults({ navigation, route }: Props) {
   return (
     <Container>
       <Header
-        setSearch={setValue}
-        search={value}
         scrollY={scrollY}
-        handleSearchHero={handleFetchHeroes}
+        handleSearchHero={handleSearchHero}
         isLoading={loading_fetch_heroes_search && !offset}
         handleGoBack={handleGoBack}
-        disable={value !== search}
       />
       <List
         data={heroes_search}

@@ -1,10 +1,10 @@
-import { CommonActions, useFocusEffect } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { 
   useCallback, 
   useEffect, 
   useState 
 } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { 
   BackHandler,
   FlatList, 
@@ -29,6 +29,7 @@ import { RootStackParamList } from '../../routes';
 import { IRootState } from '../../store';
 import { fetchHeroes } from '../../store/actions/heroesActions';
 import { fetchSearchHeroes, reset } from '../../store/actions/heroesSearchActions';
+import { FormData } from '../SearchResults';
 import {
   Container
 } from './styles';
@@ -45,12 +46,11 @@ export function Heroes({ navigation, route }: Props) {
     loading_fetch_heroes
   } = useSelector(({ heroesReducer }: IRootState) => heroesReducer);
   const {
-    heroes_search,
+    search,
     loading_fetch_heroes_search
   } = useSelector(({ heroesSearchReducer }: IRootState) => heroesSearchReducer);
 
   const [offset, setOffset] = useState(30);
-  const [search, setSearch] = useState('');
 
   const scrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -77,10 +77,10 @@ export function Heroes({ navigation, route }: Props) {
     dispatch(fetchHeroes(offset));
   };
 
-  const handleSearchHero = useCallback((value: string) => {
+  const handleSearchHero = ({ searchHero }: FormData) => {
     dispatch(reset());
-    dispatch(fetchSearchHeroes(value, 0));
-  }, []);
+    dispatch(fetchSearchHeroes(searchHero, 0));
+  };
 
   const goToHeroDetails = useCallback((hero: HeroDTO, index: number) => {
     navigation.navigate('HeroDetails', { hero, index });
@@ -88,7 +88,6 @@ export function Heroes({ navigation, route }: Props) {
 
   useFocusEffect(
     useCallback(() => {
-      setSearch('');
       BackHandler.addEventListener('hardwareBackPress', () => {
         if(route.name !== 'Heroes')
           return false; 
@@ -107,8 +106,6 @@ export function Heroes({ navigation, route }: Props) {
   return (
     <Container>
       <Header
-        setSearch={setSearch}
-        search={search}
         scrollY={scrollY}
         handleSearchHero={handleSearchHero}
         isLoading={loading_fetch_heroes_search}

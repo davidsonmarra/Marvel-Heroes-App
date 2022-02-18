@@ -1,42 +1,54 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
 import AvengersLogo from '../../assets/avengers.svg';
 import { Ionicons } from '@expo/vector-icons'; 
-import { Input } from '../Input';
+import { Input } from '../Form/Input';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Container,
   SearchBox,
   WrapperInput,
-  SearchButton,
   Loading
 } from './styles';
 import Animated, { interpolate, SharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { BackButton } from '../BackButton';
-import { Keyboard } from 'react-native';
-
-type CallbackType = (value: string) => void;
+import { Button } from '../Form/Button';
+import { RouteProp, useFocusEffect, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../../routes';
 
 interface Props {
   scrollY: SharedValue<number>;
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>
-  handleSearchHero: CallbackType;
+  handleSearchHero: ({ searchHero }: any) => void;
   isLoading: boolean;
   handleGoBack?: () => void | undefined;
-  disable?: boolean;
 }
+
+const schema = Yup.object().shape({
+  searchHero: Yup
+  .string()
+}); 
 
 export function HeaderHeroes({ 
   scrollY, 
-  search, 
-  setSearch,
   handleSearchHero,
   isLoading,
   handleGoBack = undefined,
-  disable = true
 }: Props) {
+  const route = useRoute<RouteProp<RootStackParamList, 'Heroes'>>();
   const theme = useTheme();
+  const {
+    control,
+    reset,
+    handleSubmit
+  } = useForm({resolver: yupResolver(schema)});
+
+  useFocusEffect(useCallback(() => {
+    if(route.name === 'Heroes') 
+      reset();
+  }, [route]));
 
   const logoStyleAnimation = useAnimatedStyle(() => {
     return {
@@ -78,20 +90,14 @@ export function HeaderHeroes({
           )
         }
         <Input
-          value={search}
+          name="searchHero"
           placeholder='Hero'
-          onChangeText={setSearch}
           autoCorrect={false}
           autoCapitalize='sentences'
+          control={control}
         />
-        <SearchBox enabled={!!search && disable}>
-          <SearchButton 
-            onPress={() => {
-              Keyboard.dismiss();
-              handleSearchHero(search)
-            }} 
-            enabled={!!search && disable}
-          >
+        <SearchBox>
+          <Button onPress={handleSubmit(handleSearchHero)}>
             {
               isLoading ? (
                 <Loading />
@@ -103,7 +109,7 @@ export function HeaderHeroes({
                 />
               )
             }
-          </SearchButton>
+          </Button>
         </SearchBox>
       </WrapperInput>
     </Container>
