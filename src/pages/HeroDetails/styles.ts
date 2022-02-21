@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute',
-    backgroundColor: '#00000066',
+    backgroundColor: '#000000AA',
     zIndex: 2
   }
 });
@@ -54,10 +54,10 @@ export const Infos = styled(ScrollView).attrs({
 })``;
 
 export const RowInformation = styled.View`
+  width: 100%;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  width: 100%;
 `;
 
 export const Title = styled.Text`

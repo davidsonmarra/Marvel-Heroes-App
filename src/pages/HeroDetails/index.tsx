@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GlassHeroCard } from '../../components/GlassHeroCard';
@@ -20,17 +20,28 @@ import {
 import { BackHandler } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { HandAnimation } from '../../components/HandAnimation';
-import Animated, { Easing, interpolate, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Animated, { 
+  Easing, 
+  interpolate, 
+  runOnJS, 
+  useAnimatedStyle, 
+  useSharedValue, 
+  withTiming 
+} from 'react-native-reanimated';
 import { Tutorial } from '../../components/Tutorial';
+
+interface AsyncStorageProps {
+  showTutorial: boolean;
+}
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HeroDetails'>;
 
-
 export function HeroDetails({ navigation, route }: Props) {
   const { hero, index } = route.params;
-  const [isTutorialEnd, setIsEndTutorialEnd] = useState(false);
+  const [isTutorialEnd, setIsTutorialEnd] = useState(false);
   const [isCloseTutorial, setIsCloseTutorial] = useState(false);
-  const viewRef = useRef(null);
+  const viewRef = useRef<any>(null);
   const hasImage = hero.thumbnail.path.includes('image_not_available');
   const { height } = useWindowDimensions();
   const animation = useSharedValue(0);
@@ -55,7 +66,7 @@ export function HeroDetails({ navigation, route }: Props) {
       },
       () => {
         'worklet'
-        runOnJS(setIsEndTutorialEnd)(true);
+        runOnJS(setIsTutorialEnd)(true);
       }
     );
   }
@@ -68,6 +79,23 @@ export function HeroDetails({ navigation, route }: Props) {
       });
     }, [route])
   );
+
+  async function loadAsyncStorage() {
+    let isShowTutorialAgain: AsyncStorageProps;
+    try {
+      const data = await AsyncStorage.getItem('@marvelheroes:show_tutorial_again');
+      if(!!data) {
+        isShowTutorialAgain = JSON.parse(data!);
+        !isShowTutorialAgain.showTutorial && setIsTutorialEnd(true);
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  } 
+
+  useEffect(() => {
+    loadAsyncStorage(); 
+  }, []);
 
   return (
     <Container>

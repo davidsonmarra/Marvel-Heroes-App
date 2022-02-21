@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, Switch } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -34,7 +34,9 @@ export const Description = styled.Text`
 
 export const Wrapper = styled.View`
   width: 75%;
-  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin-top: ${RFValue(8)}px;
 `;
 
@@ -50,3 +52,17 @@ export const ButtonTitle = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.title_light};
 `;
+
+export const SwitchContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const TextSwitch = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.medium};
+  font-size: ${RFValue(16)}px;
+  color: ${({ theme }) => theme.colors.info};
+  margin-right: ${RFValue(8)}px;
+`;
+
+export const InputSwitch = styled(Switch)``;

@@ -26,6 +26,7 @@ export const fetchHeroes = (offset: number) => async (dispatch: Dispatch) => {
       payload: data?.data?.results
     });
   } catch (e) {
+    console.log(e)
     dispatch({ type: heroesActionTypes.FETCH_HEROES_ERROR, payload: e });
   }
 };

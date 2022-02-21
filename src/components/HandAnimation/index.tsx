@@ -24,9 +24,11 @@ export function HandAnimation({ isClose }: Props) {
     }
   });
 
-  useFocusEffect(() => {
-    ref.current?.play();
-  });
+  useEffect(() => {
+    setTimeout(() => {
+      ref.current?.play();
+    }, 500);
+  }, []);
   
   useEffect(() => {    
     if(isClose) {
