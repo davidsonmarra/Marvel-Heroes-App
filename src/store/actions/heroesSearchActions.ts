@@ -23,6 +23,7 @@ export const fetchSearchHeroes = (search: string, offset: number) => async (disp
   const searchQuery = `?nameStartsWith=${search}&limit=10&offset=${offset}&ts=${ts}&apikey=${PUBLIC_KEY}&hash=${hashMD5}`;
   try {
     let { data } = await api.get(`/characters${searchQuery}`);
+    console.log(data)
     dispatch({
       type: heroesSearchActionTypes.FETCH_HEROES_SEARCH_SUCCESS,
       payload: data?.data?.results
